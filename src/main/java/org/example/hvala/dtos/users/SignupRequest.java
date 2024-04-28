@@ -2,10 +2,13 @@ package org.example.hvala.dtos.users;
 
 import java.util.Set;
 
-public class SignupDto {
-  private String email;
+public class SignupRequest {
   private String username;
+
+  private String email;
+
   private Set<String> role;
+
   private String password;
 
   public String getUsername() {
