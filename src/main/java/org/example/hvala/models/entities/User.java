@@ -20,7 +20,7 @@ public class User extends BaseEntity {
     private String password;
     private String phone;
     private String photo;
-    private Set<Role> roles = new HashSet<>();
+    private Role role;
 
     protected User() {}
 
@@ -92,15 +92,13 @@ public class User extends BaseEntity {
         this.photo = photo;
     }
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(  name = "user_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
-    public Set<Role> getRoles() {
-        return roles;
+    @ManyToOne
+    @JoinColumn(name = "role_id")
+    public Role getRole() {
+        return role;
     }
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
+    public void setRole(Role role) {
+        this.role = role;
     }
 }

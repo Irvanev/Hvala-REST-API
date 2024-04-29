@@ -62,7 +62,7 @@ public class WebSecurityConfig {
                         auth.requestMatchers("/api/auth/**").permitAll()
                                 .requestMatchers("/api/categories/all", "/api/sub_categories/all").authenticated()
                                 .requestMatchers("/api/categories/add", "/api/sub_categories/add").hasRole("ADMIN")
-                                .anyRequest().authenticated()
+                                .anyRequest().permitAll()
                 );
 
         http.authenticationProvider(authenticationProvider());
