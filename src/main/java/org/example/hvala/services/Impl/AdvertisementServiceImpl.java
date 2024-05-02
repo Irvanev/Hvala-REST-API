@@ -23,9 +23,12 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     private ModelMapper modelMapper;
 
     @Autowired
-    public void setAdvertisementServiceImpl(AdvertisementRepository advertisementRepository, ModelMapper modelMapper,
-                                            CharacteristicRepository characteristicRepository,
-                                            SubCategoryRepository subCategoryRepository) {
+    public void setAdvertisementServiceImpl(
+            AdvertisementRepository advertisementRepository,
+            ModelMapper modelMapper,
+            CharacteristicRepository characteristicRepository,
+            SubCategoryRepository subCategoryRepository
+    ) {
         this.advertisementRepository = advertisementRepository;
         this.characteristicRepository = characteristicRepository;
         this.subCategoryRepository = subCategoryRepository;
@@ -45,4 +48,6 @@ public class AdvertisementServiceImpl implements AdvertisementService {
         characteristic.setAdvertisement(advertisement);
         characteristicRepository.saveAndFlush(characteristic);
     }
+
+
 }

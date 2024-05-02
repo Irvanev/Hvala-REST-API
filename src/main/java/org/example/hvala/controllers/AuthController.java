@@ -11,6 +11,7 @@ import org.example.hvala.models.entities.User;
 import org.example.hvala.models.enums.RoleEnum;
 import org.example.hvala.repositories.RoleRepository;
 import org.example.hvala.repositories.UserRepository;
+import org.example.hvala.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -44,6 +45,9 @@ public class AuthController {
   @Autowired
   JwtUtils jwtUtils;
 
+  @Autowired
+  UserService userService;
+
   @PostMapping("/signin")
   public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
 
@@ -63,29 +67,7 @@ public class AuthController {
 
   @PostMapping("/signup")
   public ResponseEntity<?> registerUser(@RequestBody SignupRequest signUpRequest) {
-    if (userRepository.existsByUsername(signUpRequest.getUsername())) {
-      return ResponseEntity
-          .badRequest()
-          .body(new MessageResponse("Error: Username is already taken!"));
-    }
-
-    if (userRepository.existsByEmail(signUpRequest.getEmail())) {
-      return ResponseEntity
-          .badRequest()
-          .body(new MessageResponse("Error: Email is already in use!"));
-    }
-
-    var role = roleRepository.findByName(RoleEnum.ROLE_USER)
-            .orElseThrow(() -> new RuntimeException("Error: Role USER is not found."));
-
-    // Create new user's account
-    User user = new User(signUpRequest.getUsername(),
-               signUpRequest.getEmail(),
-               encoder.encode(signUpRequest.getPassword())
-    );
-    user.setRole(role);
-    userRepository.save(user);
-
+    userService.addUser(signUpRequest);
     return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
   }
 }

@@ -1,5 +1,6 @@
 package org.example.hvala.controllers;
 
+import org.example.hvala.dtos.advertisements.AddAdvertisementCharacteristicDto;
 import org.example.hvala.dtos.advertisements.AddAdvertisementDto;
 import org.example.hvala.dtos.AddCharacteristicDto;
 import org.example.hvala.services.AdvertisementService;
@@ -22,8 +23,8 @@ public class AdvertisementController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Void> addAdvertisement(@RequestBody AddAdvertisementDto addAdvertisementDto, @RequestBody AddCharacteristicDto addCharacteristicDto) {
-        advertisementService.addAdvertisement(addAdvertisementDto, addCharacteristicDto);
+    public ResponseEntity<Void> addAdvertisement(@RequestBody AddAdvertisementCharacteristicDto addAdvertisementCharacteristicDto) {
+        advertisementService.addAdvertisement(addAdvertisementCharacteristicDto.getAddAdvertisementDto(), addAdvertisementCharacteristicDto.getAddCharacteristicDto());
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 }
